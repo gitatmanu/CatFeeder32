@@ -1,13 +1,22 @@
+#include <FS.h>
+#include <SPIFFS.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
+
 #include <WiFi.h>
-#include <WebServer.h>
 #include "External.h"
 
-WebServer server(88);
+AsyncWebServer server(88);
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Try Connecting to ");
   Serial.println(ssid);
+
+  if(!SPIFFS.begin(true)){
+    Serial.println("An Error has occurred while mounting SPIFFS");
+    return;
+  }
 
   WiFi.begin(ssid, password);
 
@@ -20,8 +29,13 @@ void setup() {
   Serial.print("Got IP: ");
   Serial.println(WiFi.localIP());
 
-  server.on("/", handle_root);
-  server.on("/manifest.json", handle_manifest);
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/index.html", "text/html");
+  });
+  
+  server.on("/manifest.json", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/manifest.json", "application/json");
+  });
 
   server.begin();
   Serial.println("HTTP server started");
@@ -29,15 +43,4 @@ void setup() {
 }
 
 void loop() {
-  server.handleClient();
-  delay(1);
-}
-
-
-void handle_root() {
-  server.send(200, "text/html", rootTemplate);
-}
-
-void handle_manifest() {
-  server.send(200, "application/json", manifestTemplate);
 }
