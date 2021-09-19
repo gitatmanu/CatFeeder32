@@ -2,7 +2,6 @@
 #include <SPIFFS.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-
 #include <WiFi.h>
 #include "External.h"
 
@@ -29,6 +28,7 @@ void setup() {
   Serial.print("Got IP: ");
   Serial.println(WiFi.localIP());
 
+
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.html", "text/html");
   });
@@ -42,5 +42,4 @@ void setup() {
   delay(100);
 }
 
-void loop() {
-}
+void loop() {}

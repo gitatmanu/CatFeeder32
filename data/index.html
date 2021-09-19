@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <link rel="icon" sizes="256x256" href="https://bienesraicesmariposa.com/wp-content/uploads/2020/06/brm-fb.png">
+    <link rel="icon" sizes="256x256" href="https://i.ibb.co/CKJfSFf/gato.png">
     <link rel="manifest" href="/manifest.json">
     <title>CatFeeder32</title>
+    <style>
+        label {
+            margin: 0 20px;
+        }
+    </style>
   </head>
   <body class="bg-dark">
     <div class="container-fluid m-0 p-0">
         <div class="d-flex" style="background-color:purple;padding: 20px;">
-            <img src="https://bienesraicesmariposa.com/wp-content/uploads/2020/06/brm-fb.png" width="90" height="90" alt="">
+            <img src="https://i.ibb.co/CKJfSFf/gato.png" width="90" height="90" alt="">
             <h1 style="padding:20px; font-size: 2.0rem; word-break: break-word;" class="font-weight-bold">CatFeeder32</h1>
         </div>
 
@@ -22,8 +27,8 @@
                 <div class="input-group">
                     <div class="input-group-append" style="margin:0 auto;">
                         <button id="subtract_interval_open" class="btn btn-lg btn-outline-secondary" type="button">-</button>
-                        <label id="number_interval_open" class="display-2" for="floatingInput">0</label>
-                        <label class="display-2" for="floatingInput">horas</label>
+                        <label id="number_interval_open" class="display-3" for="floatingInput">0</label>
+                        <label class="display-3" for="floatingInput">horas</label>
                         <button id="add_interval_open" class="btn btn-lg btn-outline-secondary" type="button">+</button>
                     </div>
                 </div>
@@ -36,8 +41,8 @@
                 <div class="input-group">
                     <div class="input-group-append" style="margin:0 auto;">
                         <button id="subtract_open_gate_time" class="btn btn-lg btn-outline-secondary" type="button">-</button>
-                        <label id="number_open_gate_time" class="display-2" for="floatingInput">0</label>
-                        <label class="display-2" for="floatingInput">segundos</label>
+                        <label id="number_open_gate_time" class="display-3" for="floatingInput">0</label>
+                        <label class="display-3" for="floatingInput">segundos</label>
                         <button id="add_open_gate_time" class="btn btn-lg btn-outline-secondary" type="button">+</button>
                     </div>
                 </div>
@@ -46,7 +51,17 @@
         
         <div class="row m-2">
             <button id="save_button" class="btn btn-lg btn-light btn-outline-secondary" type="button">Guardar</button>
+            <div id="toast_success" class="toast align-items-center bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                Guardado correctamente.
+            </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            </div>
         </div>
+
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
@@ -55,11 +70,11 @@
         var add_interval_open = document.getElementById("add_interval_open")
         var subtract_open_gate_time = document.getElementById("subtract_open_gate_time")
         var add_open_gate_time = document.getElementById("add_open_gate_time")
-
         var number_interval_open = document.getElementById("number_interval_open")
         var number_open_gate_time = document.getElementById("number_open_gate_time")
-
         var save_button = document.getElementById("save_button")
+
+        var toast_success = document.getElementById("toast_success")
 
         subtract_interval_open.addEventListener("click", () => {
             if (parseInt(number_interval_open.innerHTML, 10) > 0) {
@@ -83,6 +98,7 @@
 
         save_button.addEventListener("click", () => {
             // AJAX
+            toast_success.classList.add("d-block")
         })
 
     </script>
